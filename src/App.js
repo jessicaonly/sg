@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
+import card from './assets/back.png';
+import shuffleSound from './assets/shuffling-cards-1.wav'
+
 
 class App extends Component {
   state = {
@@ -7,7 +10,32 @@ class App extends Component {
     handOfCards: []
   }
 
+  shuffle = (e) => {
+    //initiate shuffledeck variable to shuffle through, so as not to mutate state directly
+    let shuffleDeck = this.state.deckOfCards;
+    let shuffleChhh = new Audio(shuffleSound);
+
+    e.preventDefault();
+
+    //shuffle deck with Fisher-Yates algorithm - https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+    for (let i = shuffleDeck.length - 1; i > 0; i -= 1){
+      let j = Math.floor(Math.random() * (i + 1));
+      let temp = shuffleDeck[i];
+      shuffleDeck[i] = shuffleDeck[j];
+      shuffleDeck[j] = temp;
+    }
+    this.setState({deckOfCards: shuffleDeck})
+    console.log(this.state.deckOfCards);
+
+    shuffleChhh.play();
+
+    this.state.handOfCards.push(shuffleDeck.slice(0, 5));
+    
+    console.log(this.state.handOfCards);
+  }
+
   componentDidMount = () => {
+    //initiate deck of cards
     let values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace'];
     let suits = ['clubs', 'diamonds', 'hearts', 'spades'];
 
@@ -24,9 +52,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <div className='stack__of__cards'>
+          <button className='deal__button' onClick={this.shuffle}>Deal!</button>
+          <img className = 'card__back' src={card} alt="Card Deck" />
+        </div>
+        <div className='user`\s hand'>
           <p>
             This poker game!
           </p>
+          </div>
       </div>
     );
   }

@@ -1,6 +1,6 @@
 {
-  "short_name": "React/Redux Poker Game",
-  "name": "React/Redux Poker Game",
+  "short_name": "React Poker Game",
+  "name": "React Poker Game",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
