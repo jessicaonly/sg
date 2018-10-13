@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import './App.css';
 import card from './assets/back.png';
 import shuffleSound from './assets/shuffling-cards-1.wav'
+import images from './images';
 
+import Hand from './Components/Hand';
 
-class App extends Component {
+class App extends React.Component {
   state = {
     deckOfCards: [],
-    handOfCards: []
+    handOfCards: [],
   }
 
   shuffle = (e) => {
@@ -30,18 +32,17 @@ class App extends Component {
     shuffleChhh.play();
 
     this.state.handOfCards.push(shuffleDeck.slice(0, 5));
-    
-    console.log(this.state.handOfCards);
+  
   }
 
   componentDidMount = () => {
     //initiate deck of cards
     let values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace'];
-    let suits = ['clubs', 'diamonds', 'hearts', 'spades'];
+    let suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades'];
 
     for (let i = 0; i < suits.length; i++){
       for (let j = 0; j < values.length; j++){
-        this.state.deckOfCards.push(values[j] + '_of_' + suits[i]);
+        this.state.deckOfCards.push(values[j] + ' of ' + suits[i]);
       }
     }
     console.log(this.state.deckOfCards);
@@ -57,10 +58,8 @@ class App extends Component {
           <img className = 'card__back' src={card} alt="Card Deck" />
         </div>
         <div className='user`\s hand'>
-          <p>
-            This poker game!
-          </p>
-          </div>
+          <Hand hand={this.state.handOfCards} />
+        </div>
       </div>
     );
   }
